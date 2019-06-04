@@ -75,7 +75,7 @@
 
     <div class="row">
       <div class="input-group">
-        <input type="checkbox" id="terms"/>
+        <input type="checkbox" id="terms" name="policy" value="agree"/>
         <label for="terms">Thay đổi thông tin cá nhân</label>
       </div>
     </div>

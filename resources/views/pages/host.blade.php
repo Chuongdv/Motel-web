@@ -48,7 +48,7 @@
         <!-- Logo
         ================================================== -->
         <div class="span5 logo">
-            <a href="index.htm"><img src="{{asset('img/logocompanysmall.png')}}" alt="" width="100px" height="100px" /></a>
+            <a href="/"><img src="{{asset('img/logocompanysmall.png')}}" alt="" width="100px" height="100px" /></a>
             <h5>Nơi tìm những căn nhà ưng ý cho bạn</h5>
         </div>
         
@@ -57,47 +57,13 @@
         <div class="span7 navigation">
             <div class="navbar hidden-phone">
             
-            <ul class="nav">
-            <li><a href="/home">Home</a></li>
-            <li><a href="<?php echo "/profile/" . $user->id ?>">{{$user->name}}</a></li>
-            <li><a href="page-contact.htm">Đăng xuất</a></li>
-            </ul>
+            <a  class="blue button" href="/">Trang chủ</a>
+            <a  class="blue button" href="<?php echo "/profile/" . $user->id ?>">{{$user->name}}</a>
+            <a  class="blue button"href="/signout">Đăng xuất</a>
            
-            </div>
 
-            <!-- Mobile Nav
-            ================================================== -->
-            <form action="#" id="mobile-nav" class="visible-phone">
-                <div class="mobile-nav-select">
-                <select onchange="window.open(this.options[this.selectedIndex].value,'_top')">
-                    <option value="">Navigate...</option>
-                    <option value="index.htm">Home</option>
-                        <option value="index.htm">- Full Page</option>
-                        <option value="index-gallery.htm">- Gallery Only</option>
-                        <option value="index-slider.htm">- Slider Only</option>
-                    <option value="features.htm">Features</option>
-                    <option value="page-full-width.htm">Pages</option>
-                        <option value="page-full-width.htm">- Full Width</option>
-                        <option value="page-right-sidebar.htm">- Right Sidebar</option>
-                        <option value="page-left-sidebar.htm">- Left Sidebar</option>
-                        <option value="page-double-sidebar.htm">- Double Sidebar</option>
-                    <option value="gallery-4col.htm">Gallery</option>
-                        <option value="gallery-3col.htm">- 3 Column</option>
-                        <option value="gallery-4col.htm">- 4 Column</option>
-                        <option value="gallery-6col.htm">- 6 Column</option>
-                        <option value="gallery-4col-circle.htm">- Gallery 4 Col Round</option>
-                        <option value="gallery-single.htm">- Gallery Single</option>
-                    <option value="blog-style1.htm">Blog</option>
-                        <option value="blog-style1.htm">- Blog Style 1</option>
-                        <option value="blog-style2.htm">- Blog Style 2</option>
-                        <option value="blog-style3.htm">- Blog Style 3</option>
-                        <option value="blog-style4.htm">- Blog Style 4</option>
-                        <option value="blog-single.htm">- Blog Single</option>
-                    <option value="page-contact.htm">Contact</option>
-                </select>
-                </div>
-                </form>
-                
+            </div>
+           
         </div>
 
       </div><!-- End Header -->
@@ -105,42 +71,45 @@
     <!-- Page Content
     ================================================== --> 
     <div class="row"><!--Container row-->
-        <form action="/" method="post" accept-charset="utf-8" enctype="multipart/form-data">
-           <input type="hidden" name="_token" value="{{csrf_token()}}"/> 
+
         
         <!-- Page Sidebar
         ================================================== --> 
-        <div class="span4 sidebar page-sidebar"><!-- Begin sidebar column -->
+        <div class="span4 sidebar page-sidebar" ><!-- Begin sidebar column -->
 
+            <?php 
+                $house = DB::table('house')->where('own', '=', $user->id)->join('image', 'house.id', '=', 'image.id')->join('province', 'province', '=', 'province.id')->get();
+
+            ?>
             <!--Latest News-->
             <h5 class="title-bg">Bài đăng trước đó</h5>
+           
             <ul class="popular-posts">
+                @foreach($house as $home)
                 <li>
-                    <a href="#"><img src="img/gallery/gallery-img-2-thumb.jpg" alt="Popular Post"></a>
-                    <h6><a href="#">Lorem ipsum dolor sit amet consectetur adipiscing elit</a></h6>
-                    <em>Posted on 09/01/15</em>
+                @if(is_null($home->image1))
+                    <a href="#"><img  src="{{asset('img/gallery/gallery-img-2-thumb.jpg')}}" alt="Popular Post" style="width: 70px; height: 70px"></a>
+                @else
+                    <a href="#"><img  src="/image/house/{{$home->image1}}" alt="Popular Post" style="width: 70px; height: 70px"></a>
+                @endif
+                <?php 
+                     $district = DB::table('district')->where('id', '=', $home->district)->get();
+                     $ward = DB::table('ward')->where('id', '=', $home->ward)->get();
+                     $addr = $home->location .", " . $ward[0]->name .", " . $district[0]->name . $home->name;
+                    $display = $addr;
+                        
+                     if(strlen( $addr) > 100)
+                     {
+                        $display =  mb_substr($addr, 0, 97);
+                        $display = $display . "...";
+                     } 
+                    
+                ?>
+                
+                    <h6><a href="#">{{$display}}</a></h6>
+                    <em>Đăng vào lúc {{$home->time}}</em>
                 </li>
-                <li>
-                    <a href="#"><img src="img/gallery/gallery-img-2-thumb.jpg" alt="Popular Post"></a>
-                    <h6><a href="#">Nulla iaculis mattis lorem, quis gravida nunc iaculis</a></h6>
-                    <em>Posted on 09/01/15</em>
-                <li>
-                    <a href="#"><img src="img/gallery/gallery-img-2-thumb.jpg" alt="Popular Post"></a>
-                    <h6><a href="#">Vivamus tincidunt sem eu magna varius elementum maecenas felis</a></h6>
-                    <em>Posted on 09/01/15</em>
-                </li>
-                                <li>
-                    <a href="#"><img src="img/gallery/gallery-img-2-thumb.jpg" alt="Popular Post"></a>
-                    <h6><a href="#">Vivamus tincidunt sem eu magna varius elementum maecenas felis</a></h6>
-                    <em>Posted on 09/01/15</em>
-                </li>
-                                <li>
-                    <a href="#"><img src="img/gallery/gallery-img-2-thumb.jpg" alt="Popular Post"></a>
-                    <h6><a href="#">Vivamus tincidunt sem eu magna varius elementum maecenas felis</a></h6>
-                    <em>Posted on 09/01/15</em>
-                </li>
-    
-
+                @endforeach
 
             </ul>
 
@@ -148,17 +117,31 @@
 
         </div><!-- End sidebar column -->
 
+        <form action="/host/{{$user->id}}" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+           <input type="hidden" name="_token" value="{{csrf_token()}}"/> 
         <!-- Page Content
         ================================================== --> 
-        <div class="span8"><!--Begin page content column-->
+        <div class="span8" ><!--Begin page content column-->
 
             <h2 class="title-bg">Bài đăng mới</h2>
+                @if(count($errors) > 0)
+                    <div class="alert alert-danger">
+                        @foreach($errors->all() as $err)
+                            {{$err}}<br>
+                        @endforeach()  
+                    </div>
+                @endif
+                @if(session('thongbao'))
+                    <div class="alert alert-success">
+                        {{session('thongbao')}}
+                    </div>
+                @endif
             <div class="newpost">
                 <h5 class="title-bg">Thông tin cơ bản</h5>
                  <ul class="">
                 <li>
                 <div class="center" class="icon-plus-sign">
-                     <select name="sources" id="selectProvince" placeholder="Source Type">
+                     <select name="provinceform" id="selectProvince" placeholder="Source Type">
                         <option value="-1">Tỉnh/Thành phố</option>
                         @foreach($province as $pro)
                         <option value="{{$pro->id}}">{{$pro->name}}</option>
@@ -168,15 +151,15 @@
                 </li>
                 <li>
                     <div class="center">
-                         <select name="sources" id="selectDistrict"placeholder="Source Type">
+                         <select name="districtform" id="selectDistrict"placeholder="Source Type">
                             <option value="-1">Quận/Huyện</option>
                          </select>
                     </div>
                 </li>
                 <li>
                     <div class="center">
-                     <select name="sources" id="selectWard" placeholder="Source Type">
-                        <option value="profile">Phường/Xã</option>
+                     <select name="wardform" id="selectWard" placeholder="Source Type">
+                        <option value="-1">Phường/Xã</option>
                      </select>
                      </div>
                 </li>
@@ -188,21 +171,21 @@
                 </li>  
                 <li>
                     <div class="center">
-                     <select name="sources" placeholder="Source Type">
-                        <option value="room">Thuê phòng</option>
-                        <option value="house">Thuê căn hộ/ trung cư </option>
-                        <option value="roommate">Ở Ghép</option>
+                     <select name="method" placeholder="Source Type">
+                        <option value="1">Thuê phòng</option>
+                        <option value="3">Thuê căn hộ/ trung cư </option>
+                        <option value="2">Ở Ghép</option>
                      </select>
                      </div>
                 </li>
                 <li>
                     <div class="center">
-                        <input type="number" name="quantity" min="0" placeholder="Diện tích">
+                        <input type="number"  name="quantity" min="0" placeholder="Diện tích theo đơn vị m2">
                      </div>
                 </li>
                 <li>
                     <div class="center">
-                        <input type="number" name="quantity" min="0" placeholder="Giá thuê">
+                        <input type="number" name="cost" min="0" placeholder="Giá thuê theo đơn vị nghìn đồng">
                     </div>
                 </li>
             </ul>
@@ -253,7 +236,7 @@
                         <div>
                             <input type="text" name="describeHouse1" placeholder="Mô tả ảnh">
                         </div>
-                        <button id="uploadimage1">Thêm mô tả</button>
+                        <button id="uploadimage1"class="green button">Thêm mô tả</button>
                     </div>
 
                     <div id="imagetwo" hidden>
@@ -261,7 +244,7 @@
                         <div>
                             <input type="text" name="describeHouse2" placeholder="Mô tả ảnh">
                         </div>
-                        <button id="uploadimage2">Thêm mô tả</button>
+                        <button id="uploadimage2" class="green button">Thêm mô tả</button>
                     </div>
    
                     <div id="imagethree" hidden>
@@ -269,7 +252,7 @@
                         <div>
                             <input type="text" name="describeHouse3" placeholder="Mô tả ảnh">
                         </div>
-                        <button id="uploadimage3">Thêm mô tả</button>
+                        <button id="uploadimage3" class="green button">Thêm mô tả</button>
                     </div>
 
                     <div id="imagefour" hidden>
@@ -277,7 +260,7 @@
                         <div>
                             <input type="text" name="describeHouse4" placeholder="Mô tả ảnh">
                         </div>
-                        <button id="uploadimage4">Thêm mô tả</button>
+                        <button id="uploadimage4" class="green button">Thêm mô tả</button>
                     </div>
                 </div>
             </div> 
@@ -288,27 +271,27 @@
                 <li>
                 <div class="">
                     
-                    <input class="span4" id="prependedInput" size="16" type="text" placeholder="Name">
+                    <input name ="hostName" class="span4" id="prependedInput" size="16" type="text" placeholder="Tên">
                    </div>
                  </li>
                  <li>
                 <div>
                     
-                    <input class="span4" id="prependedInput" size="16" type="number" placeholder="Số điện thoại">
+                    <input name = "hostPhone" class="span4" id="prependedInput" size="16" type="number" placeholder="Số điện thoại">
                 </div>
             </li>
             </ul>
             </div>
             <h5 class="title-bg">Hoàn thành</h5> 
                 <div style="display:block; height:50px;">
-                     <input type="submit" style="display:block; margin:auto;" value="Đăng bài">
+                     <input type="submit" class="large green button" style="display:block; margin:auto;" value="Đăng bài">
                 </div>
                
 
             </div>
-        
+         </form>
         </div> <!--End page content column--> 
-    </form>
+   
 
     </div><!-- End container row -->
     
@@ -455,7 +438,8 @@ function preview1(){
 //*/
 }
 
-function adddescribe1(){
+function adddescribe1(event){
+     event.preventDefault();
     $('#deshou1').html($("input[name='describeHouse1']").val());
     $('#imageone').attr('hidden', true);
     $('#imagetwo').attr('hidden', false);
@@ -486,7 +470,8 @@ function preview2(){
 //*/
 }
 
-function adddescribe2(){
+function adddescribe2(event){
+     event.preventDefault();
     $('#deshou2').html($("input[name='describeHouse2']").val());
     $('#imagetwo').attr('hidden', true);
     $('#imagethree').attr('hidden', false);
@@ -518,7 +503,8 @@ function preview3(){
 //*/
 }
 
-function adddescribe3(){
+function adddescribe3(event){
+     event.preventDefault();
     $('#deshou3').html($("input[name='describeHouse3']").val());
     $('#imagethree').attr('hidden', true);
     $('#imagefour').attr('hidden', false);
@@ -550,7 +536,8 @@ function preview4(){
 //*/
 }
 
-function adddescribe4(){
+function adddescribe4(event){
+     event.preventDefault();
     $('#deshou4').html($("input[name='describeHouse4']").val());
     $('#imagefour').attr('hidden', true);
 

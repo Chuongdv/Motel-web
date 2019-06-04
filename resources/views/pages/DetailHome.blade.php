@@ -1,27 +1,78 @@
 @extends('layout.blueprint')
 @section('body')
+
+            <?php 
+                    $province = DB::table('province')->where('id', '=', $home->province)->get();
+                     $district = DB::table('district')->where('id', '=', $home->district)->get();
+                     $ward = DB::table('ward')->where('id', '=', $home->ward)->get();
+                     $addr = $home->location .", " . $ward[0]->name .", " . $district[0]->name .", " . $province[0]->name;
+                    $display = $addr;
+                        
+                    
+             ?>
+
+
+
             <!-- Blog Post 1 -->
             <article>
-                <h3 class="title-bg"><a href="#">A subject that is beautiful in itself</a></h3>
+                <h3 class="title-bg"> {{$display}}</h3>
                 <div class="post-content">
                     <div class="slideshow-container">
-
+                        
                         <div class="mySlides ">
-                          <div class="numbertext">1 / 3</div>
-                          <img class="imageshow" src="img/logocompany.PNG" >
-                          <div class="text">Caption Text</div>
+                          <div class="numbertext">1 / 4</div>
+                          @if(is_null($home->image1))
+                          <img class="imageshow"style="width: 770px; height: 500px" src="{{asset('img/gallery/post-img-1.jpg')}}" >
+                          @else
+                           <img class="imageshow" style="width: 770px; height: 500px" src="../image/house/{{$home->image1}}" >
+                          @endif
+                          @if(is_null($home->describe1))
+                          <div class="text">Không có mô tả</div>
+                          @else
+                          <div class="text">{{$home->describe1}}</div>
+                          @endif
                         </div>
 
                         <div class="mySlides ">
-                          <div class="numbertext">2 / 3</div>
-                          <img class="imageshow" src="img/logocompany.PNG" >
-                          <div class="text">Caption Two</div>
+                          <div class="numbertext">2 / 4</div>
+                          @if(is_null($home->image2))
+                          <img class="imageshow" style="width: 770px; height: 500px" src="{{asset('img/gallery/post-img-1.jpg')}}" >
+                          @else
+                          <img class="imageshow" style="width: 770px; height: 500px" src="../image/house/{{$home->image2}}" >
+                          @endif
+                          @if(is_null($home->describe2))
+                          <div class="text">Không có mô tả</div>
+                          @else
+                          <div class="text">{{$home->describe2}}</div>
+                          @endif
                         </div>
 
-                        <div class="mySlides">
-                          <div class="numbertext">3 / 3</div>
-                          <img class="imageshow" src="img/sample.jpg" >
-                          <div class="text">Caption Three</div>
+                        <div class="mySlides ">
+                          <div class="numbertext">3 / 4</div>
+                          @if(is_null($home->image3))
+                          <img class="imageshow" style="width: 770px; height: 500px" src="{{asset('img/gallery/post-img-1.jpg')}}" >
+                          @else
+                          <img class="imageshow" style="width: 770px; height: 500px" src="../image/house/{{$home->image3}}" >
+                          @endif
+                          @if(is_null($home->describe3))
+                          <div class="text">Không có mô tả</div>
+                          @else
+                          <div class="text">{{$home->describe3}}</div>
+                          @endif
+                        </div>
+
+                        <div class="mySlides ">
+                          <div class="numbertext">4 / 4</div>
+                          @if(is_null($home->image4))
+                          <img class="imageshow" style="width: 770px; height: 500px" src="{{asset('img/gallery/post-img-1.jpg')}}" >
+                          @else
+                          <img class="imageshow"style="width: 770px; height: 500px"  src="../image/house/{{$home->image4}}" >
+                          @endif
+                          @if(is_null($home->describe4))
+                          <div class="text">Không có mô tả</div>
+                          @else
+                          <div class="text">{{$home->describe4}}</div>
+                          @endif
                         </div>
 
                         <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
@@ -34,107 +85,38 @@
                           <span class="dot" onclick="currentSlide(1)"></span> 
                           <span class="dot" onclick="currentSlide(2)"></span> 
                           <span class="dot" onclick="currentSlide(3)"></span> 
+                          <span class="dot" onclick="currentSlide(4)"></span> 
                         </div>
                     
-                    <div class="post-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla iaculis mattis lorem, quis gravida nunc iaculis ac. Proin tristique tellus in est vulputate luctus fermentum ipsum molestie. Vivamus tincidunt sem eu magna varius elementum. Maecenas felis tellus, fermentum vitae laoreet vitae, volutpat et urna. Nulla faucibus ligula eget ante varius ac euismod odio placerat. Nam sit amet felis non lorem faucibus rhoncus vitae id dui. Vivamus tincidunt sem eu magna varius elementum. Maecenas felis tellus, fermentum vitae laoreet vitae, volutpat et urna. Nulla faucibus ligula eget ante varius ac euismod odio placerat. Nam sit amet felis non lorem faucibus rhoncus vitae id dui.Nulla iaculis mattis lorem, quis gravida nunc iaculis ac. Proin tristique tellus in est vulputate luctus fermentum ipsum molestie. Vivamus tincidunt sem eu magna varius elementum. Maecenas felis tellus, fermentum vitae laoreet vitae, volutpat et urna. Nulla faucibus ligula eget ante varius ac euismod odio placerat. Nam sit amet felis non lorem faucibus rhoncus vitae id dui.</p>
+                    <div class="post-body" style="font-size: 16px">
+                        <p>Địa chỉ: {{$display}}</p>
 
-                        <p class="well"><a href="#" rel="tooltip" title="An important message">Proin tristique</a> tellus in est vulputate luctus fermentum ipsum molestie. Vivamus tincidunt sem eu magna varius elementum. Maecenas felis tellus, fermentum vitae laoreet vitae, volutpat et urna. Nulla faucibus ligula eget ante varius ac euismod odio placerat. Nam sit amet felis non lorem faucibus rhoncus vitae id dui.</p>
+                       <p>Diện tích: {{$home->areas}} m2</p>
+                       <p>Giá thành: {{$home->cost}} vnd </p>
+                       <?php 
+                       $methode = DB::table('category')->where('id', '=', $home->type)->get();
+                       ?>
+                       <p>Hình thức: {{$methode[0]->description}} vnd </p>
 
-                       <p> Nam sit amet felis non lorem faucibus rhoncus vitae id dui. Vivamus tincidunt sem eu magna varius elementum. Maecenas felis tellus, fermentum vitae laoreet vitae, volutpat et urna. Nulla faucibus ligula eget ante varius ac euismod odio placerat. Nam sit amet felis non lorem faucibus rhoncus vitae id dui.</p>
+                       <p>
+                            Mô tả: 
+                        <br>
+                        {{$home->description}}
+                       </p>
 
-                       <blockquote>
-                            Maecenas felis tellus, fermentum vitae laoreet vitae, volutpat et urna. Nulla faucibus ligula eget ante varius ac euismod odio placerat.
-                       </blockquote>
-
-                       <p>Nam sit amet felis non lorem faucibus rhoncus vitae id dui.Nulla iaculis mattis lorem, quis gravida nunc iaculis ac. Proin tristique tellus in est vulputate luctus fermentum ipsum molestie. Vivamus tincidunt sem eu magna varius elementum. Maecenas felis tellus, fermentum vitae laoreet vitae, volutpat et urna. Nulla faucibus ligula eget ante varius ac euismod odio placerat. Nam sit amet felis non lorem faucibus rhoncus vitae id dui.</p>
+                        <p class="well">Liên hệ:
+                        <br> {{$home->hostName}} : {{$home->hostPhone}}
+                        </p>
                     </div>
 
                     <div class="post-summary-footer">
                         <ul class="post-data">
-                            <li><i class="icon-calendar"></i> 09/04/15</li>
-                            <li><i class="icon-user"></i> <a href="#">Admin</a></li>
-                            <li><i class="icon-comment"></i> <a href="#">5 Comments</a></li>
-                            <li><i class="icon-tags"></i> <a href="#">photoshop</a>, <a href="#">tutorials</a>, <a href="#">illustration</a></li>
+                            <li><i class="icon-calendar"></i>Thời gian đăng {{$home->time}} </li>
                         </ul>
                     </div>
                 </div>
             </article>
-
-            <!-- About the Author -->
-            <section class="post-content">
-                <div class="post-body about-author">
-                    <img src="img/author-avatar.jpg" alt="author">
-                    <h4>About Nathan Brown</h4>
-                    Proin tristique tellus in est vulputate luctus fermentum ipsum molestie. Vivamus tincidunt sem eu magna varius elementum. Maecenas felis tellus, fermentum vitae laoreet vitae, volutpat et urna. Nulla faucibus ligula eget ante varius ac euismod odio placerat. Nam sit amet felis non lorem faucibus rhoncus vitae id dui.
-                </div>
-            </section>
-
-        <!-- Post Comments
-        ================================================== --> 
-            <section class="comments">
-                <h4 class="title-bg"><a name="comments"></a>5 Comments so far</h4>
-               <ul>
-                    <li>
-                        <img src="img/user-avatar.jpg" alt="Image" />
-                        <span class="comment-name">John Doe</span>
-                        <span class="comment-date">March 15, 2015 | <a href="#">Reply</a></span>
-                        <div class="comment-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam venenatis, ligula quis sagittis euismod, odio ante molestie tortor, eget ullamcorper lacus nunc a ligula. Donec est lacus, aliquet in interdum id, rutrum ac tellus. Ut rutrum, justo et lobortis commodo, est metus ornare tortor, vitae luctus turpis leo sed magna. In leo dolor, suscipit non mattis in.</div>
-                        <!-- Reply -->
-                        <ul>
-                            <li>
-                                <img src="img/user-avatar.jpg" alt="Image" />
-                                <span class="comment-name">Jason Doe</span>
-                                <span class="comment-date">March 15, 2015 | <a href="#">Reply</a></span>
-                                <div class="comment-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam venenatis, ligula quis sagittis euismod, odio ante molestie tortor, eget ullamcorper lacus nunc a ligula. Donec est lacus, aliquet in interdum id, rutrum ac tellus. Ut rutrum, justo et lobortis commodo, est metus ornare tortor, vitae luctus turpis leo sed magna. In leo dolor, suscipit non mattis in.</div>
-                                </li>
-                             <li>
-                                <img src="img/user-avatar.jpg" alt="Image" />
-                                <span class="comment-name">Jason Doe</span>
-                                <span class="comment-date">March 15, 2015 | <a href="#">Reply</a></span>
-                                <div class="comment-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam venenatis, ligula quis sagittis euismod, odio ante molestie tortor, eget ullamcorper lacus nunc a ligula. Donec est lacus, aliquet in interdum id, rutrum ac tellus. Ut rutrum, justo et lobortis commodo, est metus ornare tortor, vitae luctus turpis leo sed magna. In leo dolor, suscipit non mattis in.</div>
-                                </li>
-                         </ul>
-                    </li>
-                    <li>
-                        <img src="img/user-avatar.jpg" alt="Image" />
-                        <span class="comment-name">John Doe</span>
-                        <span class="comment-date">March 15, 2015 | <a href="#">Reply</a></span>
-                        <div class="comment-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam venenatis, ligula quis sagittis euismod, odio ante molestie tortor, eget ullamcorper lacus nunc a ligula. Donec est lacus, aliquet in interdum id, rutrum ac tellus. Ut rutrum, justo et lobortis commodo, est metus ornare tortor, vitae luctus turpis leo sed magna. In leo dolor, suscipit non mattis in.</div>
-                    </li>
-                    <li>
-                        <img src="img/user-avatar.jpg" alt="Image" />
-                        <span class="comment-name">John Doe</span>
-                        <span class="comment-date">March 15, 2015 | <a href="#">Reply</a></span>
-                        <div class="comment-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam venenatis, ligula quis sagittis euismod, odio ante molestie tortor, eget ullamcorper lacus nunc a ligula. Donec est lacus, aliquet in interdum id, rutrum ac tellus. Ut rutrum, justo et lobortis commodo, est metus ornare tortor, vitae luctus turpis leo sed magna. In leo dolor, suscipit non mattis in.</div>
-                    </li>
-                    
-               </ul>
             
-                <!-- Comment Form -->
-                <div class="comment-form-container">
-                    <h6>Leave a Comment</h6>
-                    <form action="#" id="comment-form">
-                        <div class="input-prepend">
-                            <span class="add-on"><i class="icon-user"></i></span>
-                            <input class="span4" id="prependedInput" size="16" type="text" placeholder="Name">
-                        </div>
-                        <div class="input-prepend">
-                            <span class="add-on"><i class="icon-envelope"></i></span>
-                            <input class="span4" id="prependedInput" size="16" type="text" placeholder="Email Address">
-                        </div>
-                        <div class="input-prepend">
-                            <span class="add-on"><i class="icon-globe"></i></span>
-                            <input class="span4" id="prependedInput" size="16" type="text" placeholder="Website URL">
-                        </div>
-                        <textarea class="span6"></textarea>
-                        <div class="row">
-                            <div class="span2">
-                                <input type="submit" class="btn btn-inverse" value="Post My Comment">
-                            </div>
-                        </div>
-                    </form>
-                </div>
         </section><!-- Close comments section-->
 
 <script>
@@ -165,6 +147,100 @@ function showSlides(n) {
   slides[slideIndex-1].style.display = "block";  
   dots[slideIndex-1].className += " active";
 }
+
+
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script>
+  $(document).ready(function(){
+    $("#selectProvince").change(selectProvince);
+    $('#selectDistrict').change(selectDistrict);
+    $('#selectWard').change(selectWard);
+
+    function selectProvince(){
+    var id = $(this).find(":checked").val();
+   if(id != -1){
+    //goi server lay cac quan/huyen
+      $.ajaxSetup({
+          headers: {
+                      'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    }
+      });
+
+      $.ajaxSetup({ cache: false });
+
+      $.ajax({
+          url : "/getDistrict/" + id,
+          type : "get",
+          dataType:"json",
+          data : {
+          },
+          success : function (result){
+            $("#selectDistrict").html("<option value=\"-1\">Quận/Huyện</option>");
+            $("#selectWard").html("<option value=\"-1\">Phường/Xã</option>");
+            $.each (result, function (key, item){
+                var tmp = "<option value=\"" + item['id'] + "\">" + item['name'] + "</option>";
+                $("#selectDistrict").append(tmp);
+            });
+          }
+      });
+
+   }
+   else{
+    $("#selectDistrict").html("<option value=\"-1\">Quận/Huyện</option>");
+    $("#selectWard").html("<option value=\"-1\">Phường/Xã</option>");
+    alert("Bạn hãy chọn một tỉnh thành cụ thể");
+   }
+
+    }
+
+
+
+ function selectDistrict(){
+    var id = $(this).find(":checked").val();
+   if(id != -1){
+    //goi server lay cac quan/huyen
+      $.ajaxSetup({
+          headers: {
+                      'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    }
+      });
+
+      $.ajaxSetup({ cache: false });
+
+      $.ajax({
+          url : "/getWard/" + id,
+          type : "get",
+          dataType:"json",
+          data : {
+          },
+          success : function (result){
+            $("#selectWard").html("<option value=\"-1\">Phường/Xã</option>");
+            $.each (result, function (key, item){
+                var tmp = "<option value=\"" + item['id'] + "\">" + item['name'] + "</option>";
+                $("#selectWard").append(tmp);
+            });
+          }
+      });
+    }
+    else{
+    $("#selectWard").html("<option value=\"-1\">Phường/Xã</option>");
+    alert("Bạn hãy chọn một quận huyện thành cụ thể");
+   }
+ }
+
+function selectWard(){
+    var id = $(this).find(":checked").val();
+    if(id == -1){
+        alert("Bạn hãy chọn một phường, xã cụ thể");
+    }
+}
+
+
+
+
+});
 
 
 </script>

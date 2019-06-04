@@ -4,6 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Trang thuê nhà</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="_token" content="{{csrf_token()}}" />
 
 <!-- CSS
 ================================================== -->
@@ -47,7 +48,7 @@
         <!-- Logo
         ================================================== -->
         <div class="span5 logo">
-        	<a href="index.htm"><img src="img/logocompanysmall.png" alt="" width="100px" height="100px" /></a>
+        	<a href="/"><img src="{{asset('img/logocompanysmall.png')}}" alt="" width="100px" height="100px" /></a>
             <h5>Nơi tìm những căn nhà ưng ý cho bạn</h5>
         </div>
         
@@ -56,11 +57,11 @@
         <div class="span7 navigation">
             <div class="navbar hidden-phone">
             
-            <ul class="nav">
-            <li><a href="page-contact.htm">Home</a></li>
-            <li><a href="/signin">Đăng Tin</a></li>
-            <li><a href="page-contact.htm">Liên hệ</a></li>
-            </ul>
+            
+            <a class="large blue button" href="/">Trang chủ</a>
+            <a class="large blue button" href="/signin">Đăng Tin</a>
+            <!--<li><a href="page-contact.htm">Liên hệ</a></li>-->
+            
            
             </div>             
         </div>
@@ -80,18 +81,10 @@
         <!-- Blog Sidebar
         ================================================== --> 
         <div class="span4 sidebar">
-
-            <!--Search-->
-            <section>
-                <div class="input-append">
-                    <form action="#">
-                        <input id="appendedInputButton" size="16" type="text" placeholder="Search"><button class="btn" type="button"><i class="icon-search"></i></button>
-                    </form>
-                </div>
-            </section>
-
+            <form action="/" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+           <input type="hidden" name="_token" value="{{csrf_token()}}"/> 
             <!--Categories-->
-            <h5 class="title-bg">Danh Mục Tìm Kiếm</h5>
+            <h5 class="title-bg" style="margin-top: 0px">Danh Mục Tìm Kiếm</h5>
             <!--
             <ul class="post-category-list">
                 <li><a href="#"><i class="icon-plus-sign"></i>Design</a></li>
@@ -100,121 +93,78 @@
                 <li><a href="#"><i class="icon-plus-sign"></i>News</a></li>
             </ul>
         -->
+        <?php $province = DB::table('province')->get(); 
+        ?>
             <ul class="post-category-list">
                 <li>
                 <div class="center" class="icon-plus-sign">
-                     <select name="sources" placeholder="Source Type">
-                        <option value="profile">Tỉnh/Thành phố</option>
-                        <option value="profile">Hà Nội</option>
-                        <option value="word">Hồ Chí Minh</option>
-                        <option value="hashtag">Đà Nẵng</option>
+                     <select name="provinceform" id="selectProvince" placeholder="Source Type">
+                        <option value="-1">Tỉnh/Thành phố</option>
+                        @foreach($province as $pro)
+                        <option value="{{$pro->id}}">{{$pro->name}}</option>
+
+                        @endforeach
+
                      </select>
                 </div>
                 </li>
                 <li>
                     <div class="center">
-                         <select name="sources" placeholder="Source Type">
-                            <option value="profile">Quận/Huyện</option>
-                            <option value="word">Word</option>
-                            <option value="hashtag">Hashtag</option>
+                         <select name="districtform" id="selectDistrict"placeholder="Source Type">
+                            <option value="-1">Quận/Huyện</option>
                          </select>
                     </div>
                 </li>
                 <li>
                     <div class="center">
-                     <select name="sources" placeholder="Source Type">
-                        <option value="profile">Phường/Xã</option>
-                        <option value="word">Word</option>
-                        <option value="hashtag">Hashtag</option>
+                     <select name="wardform" id="selectWard" placeholder="Source Type">
+                        <option value="-1">Phường/Xã</option>
                      </select>
                      </div>
                 </li>
                 <li>
                     <div class="center">
-                     <select name="sources" placeholder="Source Type">
-                        <option value="profile">Thuê phòng</option>
-                        <option value="word">Thuê căn hộ/ trung cư </option>
-                        <option value="hashtag">Ở Ghép</option>
+                     <select name="method" placeholder="Source Type">
+                        <option value="-1">Hình thức thuê</option>
+                        <option value="1">Thuê phòng</option>
+                        <option value="3">Thuê căn hộ/ trung cư </option>
+                        <option value="2">Ở Ghép</option>
                      </select>
                      </div>
                 </li>
                 <li>
                     <div class="center">
-                     <select name="sources" placeholder="Source Type">
-                        <option value="profile">Diện tích</option>
-                        <option value="word">10 - 20 m2</option>
-                        <option value="hashtag">Ở Ghép</option>
+                     <select name="areaform" placeholder="Source Type">
+                        <option value="-1">Diện tích</option>
+                        <option value="1">10 - 20 m2</option>
+                        <option value="2">20 - 30 m2</option>
+                        <option value="3">30m2 - 50m2</option>
+                        <option value="4">Lớn hơn 50m2</option>
                      </select>
                      </div>
                 </li>
                 <li>
                     <div class="center">
-                     <select name="sources" placeholder="Source Type">
-                        <option value="profile">Khoảng giá</option>
-                        <option value="word">10 - 20 m2</option>
-                        <option value="hashtag">Ở Ghép</option>
+                     <select name="costform" placeholder="Source Type">
+                        <option value="-1">Khoảng giá</option>
+                        <option value="1">1 - 3 triệu</option>
+                        <option value="2">3- 5 triệu</option>
+                        <option value="3">Lớn hơn 5 triệu</option>
                      </select>
                      </div>
                 </li>
-            </ul>
 
-
-            <!--Popular Posts-->
-            <h5 class="title-bg">Popular Posts</h5>
-            <ul class="popular-posts">
                 <li>
-                    <a href="blog-single.htm"><img src="img/gallery/gallery-img-2-thumb.jpg" alt="Popular Post"></a>
-                    <h6><a href="#">Lorem ipsum dolor sit amet consectetur adipiscing elit</a></h6>
-                    <em>Posted on 09/01/15</em>
+                    <div class="center">
+                       <input type="submit"  class="large green button" value="Tìm kiếm">
+                     </div>
                 </li>
-                <li>
-                    <a href="blog-single.htm"><img src="img/gallery/gallery-img-2-thumb.jpg" alt="Popular Post"></a>
-                    <h6><a href="#">Nulla iaculis mattis lorem, quis gravida nunc iaculis</a></h6>
-                    <em>Posted on 09/01/15</em>
-                <li>
-                    <a href="blog-single.htm"><img src="img/gallery/gallery-img-2-thumb.jpg" alt="Popular Post"></a>
-                    <h6><a href="#">Vivamus tincidunt sem eu magna varius elementum maecenas felis</a></h6>
-                    <em>Posted on 09/01/15</em>
-                </li>
+
             </ul>
 
-            <!--Tabbed Content-->
-            <h5 class="title-bg">More Info</h5>
-            <ul class="nav nav-tabs">
-                <li class="active"><a href="#comments" data-toggle="tab">Comments</a></li>
-                <li><a href="#tweets" data-toggle="tab">Tweets</a></li>
-                <li><a href="#about" data-toggle="tab">About</a></li>
-            </ul>
-
-            <div class="tab-content">
-                <div class="tab-pane active" id="comments">
-                     <ul>
-                        <li><i class="icon-comment"></i>admin on <a href="#">Lorem ipsum dolor sit amet</a></li>
-                        <li><i class="icon-comment"></i>admin on <a href="#">Consectetur adipiscing elit</a></li>
-                        <li><i class="icon-comment"></i>admin on <a href="#">Ipsum dolor sit amet consectetur</a></li>
-                        <li><i class="icon-comment"></i>admin on <a href="#">Aadipiscing elit varius elementum</a></li>
-                        <li><i class="icon-comment"></i>admin on <a href="#">ulla iaculis mattis lorem</a></li>
-                    </ul>
-                </div>
-                <div class="tab-pane" id="tweets">
-                    <ul>
-                        <li><a href="#"><i class="icon-share-alt"></i>@room122</a> Vivamus tincidunt sem eu magna varius elementum. Maecenas felis tellus, fermentum vitae laoreet vitae, volutpat et urna.</li>
-                        <li><a href="#"> <i class="icon-share-alt"></i>@room122</a> Nulla faucibus ligula eget ante varius ac euismod odio placerat.</li>
-                        <li><a href="#"> <i class="icon-share-alt"></i>@room122</a> Pellentesque iaculis lacinia leo. Donec suscipit, lectus et hendrerit posuere, dui nisi porta risus, eget adipiscing</li>
-                        <li><a href="#"> <i class="icon-share-alt"></i>@room122</a> Vivamus augue nulla, vestibulum ac ultrices posuere, vehicula ac arcu.</li>
-                        <li><a href="#"> <i class="icon-share-alt"></i>@room122</a> Sed ac neque nec leo condimentum rhoncus. Nunc dapibus odio et lacus.</li>
-                    </ul>
-                </div>
-                <div class="tab-pane" id="about">
-                    <p>Enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo.</p>
-
-                    Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
-                </div>
-            </div>
-
-            <!--Video Widget-->
-            <h5 class="title-bg">Video Widget</h5>
-            <iframe src="http://player.vimeo.com/video/24496773" width="370" height="208"></iframe>
+            <!--Search-->
+        </form>
+                             
         </div>
 
     </div>
@@ -238,6 +188,12 @@
 
     <!-- Scroll to Top -->  
     <div id="toTop" class="hidden-phone hidden-tablet">Back to Top</div>
-    
+
+
+
+
+
+
+
 </body>
 </html>

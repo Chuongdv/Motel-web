@@ -10,6 +10,17 @@ use App\User;
 class Authentication extends Controller
 {
     public function getSignin(){
+        if(Auth::check())
+        {
+            if(Auth::user()->Rolle == 0)
+            {
+              return redirect('host/' . Auth::user()->id);
+            }
+            else
+            {
+                 return redirect('manager/user/list');
+            } 
+        }
     	return view('pages.login');
     }
 
@@ -17,11 +28,25 @@ class Authentication extends Controller
         
     	if(Auth::attempt(['email'=> $request->email, 'password'=> $request->password]))
     	{
-    		return redirect('host/' . Auth::user()->id);
+            if(Auth::user()->Rolle == 0)
+            {
+    		  return redirect('host/' . Auth::user()->id);
+            }
+            else
+            {
+                 return redirect('manager/user/list');
+            } 
+
     	}
     	else{
     		return redirect('signin')->with('thongbao','Email không tồn tại hoặc sai mật khẩu!');
     	}
+    }
+
+
+    public function getSignout(){
+        Auth::logout();
+        return redirect('/signin');
     }
 
     public function getSignup(){

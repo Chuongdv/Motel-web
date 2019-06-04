@@ -31,20 +31,21 @@
                         {{session('thongbao')}}
                     </div>
                 @endif
-  <form action="/signup" method="POST" enctype="multipart/form-data" >
+
+  <form action="/signup" method="POST" accept-charset="utf-8" enctype="multipart/form-data" >
     <input type="hidden" name="_token" value="{{csrf_token()}}"/> 
     <div class="row">
       <h4>Đăng kí</h4>
       <div class="input-group input-group-icon">
-        <input type="text" name="name" placeholder="Full Name"/>
+        <input type="text" name="name" placeholder="Họ và tên"/>
         <div class="input-icon"><i class="fa fa-user"></i></div>
       </div>
       <div class="input-group input-group-icon">
-        <input type="email" name="email" placeholder="Email Adress"/>
+        <input type="email" name="email" placeholder="Địa chỉ email"/>
         <div class="input-icon"><i class="fa fa-envelope"></i></div>
       </div>
       <div class="input-group input-group-icon">
-        <input type="password" name="password" placeholder="Password"/>
+        <input type="password" name="password" placeholder="Mật khẩu"/>
         <div class="input-icon"><i class="fa fa-key"></i></div>
       </div>
     </div>
@@ -67,10 +68,10 @@
     </div>
 
     <div class="row">
-      <h4>Terms and Conditions</h4>
+      <h4>Điều khoản và điều kiện</h4>
       <div class="input-group">
         <input type="checkbox" id="terms"/>
-        <label for="terms">I accept the terms and conditions for signing up to this service, and hereby confirm I have read the privacy policy.</label>
+        <label for="terms">Tôi đồng ý với các điều khoản sử dụng của trang web.</label>
       </div>
     </div>
     <input class="submitbutton" type="submit" value="Đăng kí">
