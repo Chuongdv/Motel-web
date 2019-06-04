@@ -16,31 +16,25 @@
                 <a href="admin/admin/danhsach"><i class="fa fa-users fa-fw"></i> Admin<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="admin/admin/danhsach">Danh sách</a>
-                    </li>
-                    <li>
-                        <a href="admin/admin/them">Thêm</a>
+                         <a   href="<?php echo "/profile/" . Auth::user()->id ?>">Thông tin cá nhân</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->
             </li>
             <li>
-                <a href="admin/user/danhsach"><i class="fa fa-users fa-fw"></i> User<span class="fa arrow"></span></a>
+                <a href="manager/user/list"><i class="fa fa-users fa-fw"></i> Người dùng<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="admin/user/danhsach">Danh sách</a>
+                        <a href="manager/user/list">Danh sách</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->
             </li>
             <li>
-                <a href="admin/truong/danhsach"><i class="fa fa-bar-chart-o fa-fw"></i> Trường<span class="fa arrow"></span></a>
+                <a href="manager/house/list"><i class="fa fa-bar-chart-o fa-fw"></i> Nhà<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="admin/truong/danhsach">Danh sách</a>
-                    </li>
-                    <li>
-                        <a href="admin/truong/them">Thêm</a>
+                        <a href="manager/house/list">Danh sách</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->

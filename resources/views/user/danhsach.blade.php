@@ -36,7 +36,7 @@
                         $house = DB::table('house')->where('own', '=', $client->id)->get(); 
                         ?>
                         <td>{{count($house)}} </td>
-                        <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="manager/user/delete/{{ $client->id}}">Xóa</a></td>
+                        <td class="center"><i class="fa fa-trash-o  fa-fw"></i> <a href="manager/user/delete/{{ $client->id}}">Xóa</a></td>
                     </tr>
                     @endforeach
                 </tbody>

@@ -43,8 +43,8 @@ Route::get('/manager/user/list', 'ManagerUserController@getList');
 Route::get('/manager/user/delete/{id}', 'ManagerUserController@deleteUser');
 
 
-
-
+Route::get('/manager/house/list', 'ManagerHouseController@getList');
+Route::get('/manager/house/delete/{id}', 'ManagerHouseController@deleteHouse');
 
 
 Auth::routes();
